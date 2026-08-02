@@ -1,0 +1,91 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "geocr": "http://mlcommons.org/croissant/geo/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "dct": "http://purl.org/dc/terms/",
+    "sc": "https://schema.org/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "dataBiases": "cr:dataBiases",
+    "dataCollection": "cr:dataCollection",
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "personalSensitiveInformation": "cr:personalSensitiveInformation",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "samplingRate": "cr:samplingRate",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "@id": "boreal_agb_2020_202411261732637661_0038382",
+  "name": "boreal_agb_2020_202411261732637661_0038382",
+  "description": "",
+  "version": "1.0.0",
+  "license": "CC-BY-4.0",
+  "conformsTo": [
+    "http://mlcommons.org/croissant/1.0",
+    "http://mlcommons.org/croissant/geo/1.0"
+  ],
+  "citeAs": "@misc{icesat2-boreal-v2.1-agb, title={boreal_agb_2020_202411261732637661_0038382}, year={2026}}",
+  "url": "https://stac.maap-project.org/collections/icesat2-boreal-v2.1-agb/items/boreal_agb_2020_202411261732637661_0038382",
+  "spatialCoverage": {
+    "@type": "Place",
+    "geo": {
+      "@type": "GeoShape",
+      "box": "72.7215138641646 111.821583637516 73.8622051330815 115.626213868067"
+    }
+  },
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "cog",
+      "name": "cog",
+      "description": "Gridded predictions of aboveground biomass (Mg/ha)",
+      "contentUrl": "s3://nasa-maap-data-store/file-staging/nasa-map/icesat2-boreal-v2.1/agb/0038382/boreal_agb_2020_202411261732637661_0038382.tif",
+      "encodingFormat": "image/tiff; application=geotiff; profile=cloud-optimized",
+      "sha256": "PLACEHOLDER-CHECKSUM-REQUIRED"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "training_data_csv",
+      "name": "training_data_csv",
+      "description": "Tabular training data with latitude, longitude, and biomass observations",
+      "contentUrl": "s3://nasa-maap-data-store/file-staging/nasa-map/icesat2-boreal-v2.1/agb/0038382/boreal_agb_2020_202411261732637661_0038382_train_data.csv",
+      "encodingFormat": "text/csv",
+      "sha256": "PLACEHOLDER-CHECKSUM-REQUIRED"
+    }
+  ]
+}

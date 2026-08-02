@@ -1,0 +1,310 @@
+[
+  {
+    "@id": "https://example.org/NASA%20POWER%20T2M%202020/spatial",
+    "@type": [
+      "http://purl.org/dc/terms/Location"
+    ],
+    "http://www.opengis.net/ont/geosparql#asWKT": [
+      {
+        "@type": "http://www.opengis.net/ont/geosparql#wktLiteral",
+        "@value": "POLYGON((-180.0 -90.0, 179.375 -90.0, 179.375 90.0, -180.0 90.0, -180.0 -90.0))"
+      }
+    ]
+  },
+  {
+    "@id": "https://example.org/NASA%20POWER%20T2M%202020/recordset/t2m_data/field/longitude",
+    "@type": [
+      "http://mlcommons.org/croissant/geo/Field"
+    ],
+    "http://mlcommons.org/croissant/geo/dataType": [
+      {
+        "@value": "sc:Float"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@value": "Longitude coordinate"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@value": "longitude"
+      }
+    ]
+  },
+  {
+    "@id": "https://example.org/NASA%20POWER%20T2M%202020/recordset/t2m_data/field/time",
+    "@type": [
+      "http://mlcommons.org/croissant/geo/Field"
+    ],
+    "http://mlcommons.org/croissant/geo/dataType": [
+      {
+        "@value": "sc:Text"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@value": "Time coordinate"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@value": "time"
+      }
+    ]
+  },
+  {
+    "@id": "https://example.org/NASA%20POWER%20T2M%202020/temporal",
+    "@type": [
+      "http://purl.org/dc/terms/PeriodOfTime"
+    ],
+    "http://www.w3.org/ns/dcat#endDate": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2020-12-31"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#startDate": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2020-01-01"
+      }
+    ]
+  },
+  {
+    "@id": "https://example.org/NASA%20POWER%20T2M%202020/recordset/t2m_data/field/T2M",
+    "@type": [
+      "http://mlcommons.org/croissant/geo/Field"
+    ],
+    "http://mlcommons.org/croissant/geo/dataType": [
+      {
+        "@value": "sc:Float"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@value": "Temperature at 2 Meters"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@value": "T2M"
+      }
+    ]
+  },
+  {
+    "@id": "https://example.org/NASA%20POWER%20T2M%202020/recordset/t2m_data/field/latitude",
+    "@type": [
+      "http://mlcommons.org/croissant/geo/Field"
+    ],
+    "http://mlcommons.org/croissant/geo/dataType": [
+      {
+        "@value": "sc:Float"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@value": "Latitude coordinate"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@value": "latitude"
+      }
+    ]
+  },
+  {
+    "@id": "https://example.org/NASA%20POWER%20T2M%202020/recordset/t2m_data",
+    "@type": [
+      "http://mlcommons.org/croissant/geo/RecordSet"
+    ],
+    "http://mlcommons.org/croissant/geo/field": [
+      {
+        "@id": "https://example.org/NASA%20POWER%20T2M%202020/recordset/t2m_data/field/T2M"
+      },
+      {
+        "@id": "https://example.org/NASA%20POWER%20T2M%202020/recordset/t2m_data/field/latitude"
+      },
+      {
+        "@id": "https://example.org/NASA%20POWER%20T2M%202020/recordset/t2m_data/field/longitude"
+      },
+      {
+        "@id": "https://example.org/NASA%20POWER%20T2M%202020/recordset/t2m_data/field/time"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@value": "t2m_data"
+      }
+    ]
+  },
+  {
+    "@id": "https://example.org/NASA%20POWER%20T2M%202020",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Dataset",
+      "https://schema.org/Dataset"
+    ],
+    "http://mlcommons.org/croissant/geo/coordinateReferenceSystem": [
+      {
+        "@id": "http://www.opengis.net/def/crs/EPSG:4326"
+      }
+    ],
+    "http://mlcommons.org/croissant/geo/recordSet": [
+      {
+        "@id": "https://example.org/NASA%20POWER%20T2M%202020/recordset/t2m_data"
+      }
+    ],
+    "http://mlcommons.org/croissant/geo/spatialResolution": [
+      {
+        "@id": "_:N42d54b121e2640f99f08b1b2c8e217d7"
+      }
+    ],
+    "http://mlcommons.org/croissant/geo/temporalResolution": [
+      {
+        "@id": "_:N8869c3a37bb94f9eaa99cc326ab27cc0"
+      }
+    ],
+    "http://purl.org/dc/terms/conformsTo": [
+      {
+        "@id": "http://mlcommons.org/croissant/1.1"
+      },
+      {
+        "@id": "http://mlcommons.org/croissant/geo/1.0"
+      }
+    ],
+    "http://purl.org/dc/terms/description": [
+      {
+        "@value": "Temperature at 2 Meters monthly data for 2020"
+      }
+    ],
+    "http://purl.org/dc/terms/issued": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2020-01-01"
+      }
+    ],
+    "http://purl.org/dc/terms/license": [
+      {
+        "@id": "CC-BY-4.0"
+      }
+    ],
+    "http://purl.org/dc/terms/spatial": [
+      {
+        "@id": "https://example.org/NASA%20POWER%20T2M%202020/spatial"
+      }
+    ],
+    "http://purl.org/dc/terms/temporal": [
+      {
+        "@id": "https://example.org/NASA%20POWER%20T2M%202020/temporal"
+      }
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@value": "NASA POWER T2M 2020"
+      }
+    ],
+    "http://www.w3.org/ns/adms#version": [
+      {
+        "@value": "1.0.0"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#distribution": [
+      {
+        "@id": "https://example.org/NASA%20POWER%20T2M%202020/distribution/zarr-data"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#keyword": [
+      {
+        "@value": "temperature"
+      },
+      {
+        "@value": "climate"
+      },
+      {
+        "@value": "nasa power"
+      },
+      {
+        "@value": "t2m"
+      },
+      {
+        "@value": "2020"
+      }
+    ]
+  },
+  {
+    "@id": "_:N42d54b121e2640f99f08b1b2c8e217d7",
+    "@type": [
+      "https://schema.org/QuantitativeValue"
+    ],
+    "https://schema.org/unitText": [
+      {
+        "@value": "degrees"
+      }
+    ],
+    "https://schema.org/value": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#double",
+        "@value": 0.5
+      }
+    ]
+  },
+  {
+    "@id": "_:N8869c3a37bb94f9eaa99cc326ab27cc0",
+    "@type": [
+      "https://schema.org/QuantitativeValue"
+    ],
+    "https://schema.org/unitText": [
+      {
+        "@value": "month"
+      }
+    ],
+    "https://schema.org/value": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#integer",
+        "@value": 1
+      }
+    ]
+  },
+  {
+    "@id": "https://example.org/NASA%20POWER%20T2M%202020/distribution/zarr-data",
+    "@type": [
+      "http://www.w3.org/ns/dcat#Distribution"
+    ],
+    "http://purl.org/dc/terms/title": [
+      {
+        "@value": "zarr-data"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksum": [
+      {
+        "@id": "_:N7ef45e14da0f4e64aa48b329e73dd23f"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#accessURL": [
+      {
+        "@id": "https://nasa-power.s3.us-west-2.amazonaws.com/merra2/temporal/power_merra2_monthly_temporal_utc.zarr/"
+      }
+    ],
+    "http://www.w3.org/ns/dcat#mediaType": [
+      {
+        "@value": "application/zarr"
+      }
+    ]
+  },
+  {
+    "@id": "_:N7ef45e14da0f4e64aa48b329e73dd23f",
+    "@type": [
+      "http://spdx.org/rdf/terms#Checksum"
+    ],
+    "http://spdx.org/rdf/terms#algorithm": [
+      {
+        "@id": "http://spdx.org/rdf/terms#checksumAlgorithm_md5"
+      }
+    ],
+    "http://spdx.org/rdf/terms#checksumValue": [
+      {
+        "@value": "cf42f8c8b1d4152d36857216bdfc5056"
+      }
+    ]
+  }
+]
