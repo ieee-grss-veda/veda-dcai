@@ -99,3 +99,4 @@ GeoCroissant datasets declare conformance at the dataset level:
 - MLCommons GeoCroissant Working Group
 - MLCommons Croissant Working Group
 - Open Geospatial Consortium (OGC) GeoAI Domain Working Group
+- IEEE Geoscience and Remote Sensing Society
