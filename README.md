@@ -51,4 +51,5 @@ GeoCroissant Working Group · [croissant-geo@mlcommons.org](mailto:croissant-geo
 - MLCommons GeoCroissant Working Group
 - MLCommons Croissant Working Group
 - Open Geospatial Consortium (OGC) GeoAI Domain Working Group
+- IEEE Geoscience and Remote Sensity Society
 
