@@ -68,6 +68,12 @@ book:
           file: "OGC_TDML_to_GeoCroissant_Support/ogc_tdml_to_geocr/ogc_tdml_to_geocr_conversion.ipynb"
         - text: "GeoCroissant to OGC-TDML"
           file: "OGC_TDML_to_GeoCroissant_Support/geocr_to_ogc_tdml/geocr_to_ogc_tdml_conversion.ipynb"
+    - part: "**GeoCroissant RAI**"
+      chapters:
+        - text: "HLS Responsible AI"
+          file: "GeoCroissant_RAI/geocr_hls_rai.ipynb"
+        - text: "Wx-Bench Responsible AI"
+          file: "GeoCroissant_RAI/geocr_wxc_rai.ipynb"
     - part: "**GeoCroissant to Standards**"
       chapters:
         - text: "GeoCroissant to STAC"
