@@ -62,6 +62,9 @@ Generate GeoCroissant metadata from cloud-optimized geospatial data formats incl
 ### GeoCroissant Extensions
 Advanced features for time-series Earth observation data and OGC Training Data Markup Language integration.
 
+### GeoCroissant RAI
+Integrate RAI specification with GeoCroissant to document data provenance, access policies, and responsible AI-metadata for EO datasets.
+
 ### GeoCroissant to Standards
 Export GeoCroissant metadata to STAC and GeoDCAT formats for interoperability.
 
