@@ -1,0 +1,385 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "geocr": "http://mlcommons.org/croissant/geo/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "equivalentProperty": "cr:equivalentProperty",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "samplingRate": "cr:samplingRate",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform",
+    "prov": "http://www.w3.org/ns/prov#",
+    "odrl": "http://www.w3.org/ns/odrl/2/",
+    "duo": "http://purl.obolibrary.org/obo/",
+    "containedIn": "cr:containedIn"
+  },
+  "@type": "sc:Dataset",
+  "name": "weather-forecast-discussion",
+  "description": "Geospatial and meteorological benchmark dataset pairing NOAA High-Resolution Rapid Refresh (HRRR) weather forecast grids with Storm Prediction Center (SPC) textual weather forecast discussions.",
+  "conformsTo": [
+    "http://mlcommons.org/croissant/1.1",
+    "http://mlcommons.org/croissant/RAI/",
+    "http://mlcommons.org/croissant/geo/"
+  ],
+  "citeAs": "@misc{wxc_bench_weather_forecast_discussion_2024,\n    author = {NASA IMPACT Team and NOAA Storm Prediction Center},\n    title = {{WxC-Bench: Weather Forecast Discussion Dataset}},\n    year = {2024},\n    publisher = {Hugging Face},\n    url = {https://huggingface.co/datasets/nasa-impact/WxC-Bench/tree/main/weather_forecast_discussion}\n}",
+  "creator": [
+    {
+      "@type": "sc:Person",
+      "name": "NASA IMPACT Team"
+    },
+    {
+      "@type": "sc:Person",
+      "name": "NOAA Storm Prediction Center"
+    }
+  ],
+  "datePublished": "2024-01-01",
+  "geocr:bandConfiguration": {
+    "@type": "geocr:BandConfiguration",
+    "geocr:bandNamesList": [
+      "Precipitation rate",
+      "2 metre temperature",
+      "2 metre relative humidity",
+      "10 metre U wind component",
+      "10 metre V wind component",
+      "Total Cloud Cover",
+      "MSLP (MAPS System Reduction)",
+      "Temperature",
+      "Specific humidity"
+    ],
+    "geocr:totalBands": 9
+  },
+  "geocr:coordinateReferenceSystem": "Lambert Conformal (HRRR 3km CONUS grid)",
+  "geocr:samplingStrategy": "Daily 07Z HRRR 3km surface forecast grids aligned with SPC Day 3 convective outlook discussions.",
+  "geocr:spatialBias": "Contiguous United States (CONUS) HRRR grid domain.",
+  "geocr:spatialResolution": {
+    "@type": "sc:QuantitativeValue",
+    "unitText": "km",
+    "value": 3
+  },
+  "geocr:spectralBandMetadata": [
+    {
+      "@type": "geocr:SpectralBand",
+      "name": "Precipitation rate"
+    },
+    {
+      "@type": "geocr:SpectralBand",
+      "name": "2 metre temperature"
+    },
+    {
+      "@type": "geocr:SpectralBand",
+      "name": "2 metre relative humidity"
+    },
+    {
+      "@type": "geocr:SpectralBand",
+      "name": "10 metre U wind component"
+    },
+    {
+      "@type": "geocr:SpectralBand",
+      "name": "10 metre V wind component"
+    },
+    {
+      "@type": "geocr:SpectralBand",
+      "name": "Total Cloud Cover"
+    },
+    {
+      "@type": "geocr:SpectralBand",
+      "name": "MSLP (MAPS System Reduction)"
+    },
+    {
+      "@type": "geocr:SpectralBand",
+      "name": "Temperature"
+    },
+    {
+      "@type": "geocr:SpectralBand",
+      "name": "Specific humidity"
+    }
+  ],
+  "geocr:temporalResolution": {
+    "@type": "sc:QuantitativeValue",
+    "unitText": "days",
+    "value": 1
+  },
+  "keywords": [
+    "weather_forecast_discussion",
+    "HRRR",
+    "WxC-Bench",
+    "meteorology",
+    "NOAA",
+    "SPC",
+    "geospatial",
+    "multimodal"
+  ],
+  "license": "CC-BY-4.0",
+  "rai:annotatorDemographics": "NOAA NWS Storm Prediction Center operational meteorologists",
+  "rai:dataBiases": "Geographically constrained to CONUS.",
+  "rai:dataCollection": "Aggregated from NOAA NCEI HRRR archives and NWS Storm Prediction Center forecast text archives.",
+  "rai:dataLimitations": "HRRR subset includes 9 selected surface/atmospheric variable layers at 07Z run time.",
+  "rai:dataSocialImpact": "Advances AI capabilities for early severe weather detection and automated meteorological communication.",
+  "rai:dataUseCases": "Multimodal weather-language modeling, AI weather forecasting, automated report synthesis.",
+  "rai:personalSensitiveInformation": "Contains no personal sensitive information; strictly public weather observations.",
+  "spatialCoverage": {
+    "@type": "Place",
+    "geo": {
+      "@type": "GeoShape",
+      "box": "21.138 -134.095 52.615 -60.918"
+    }
+  },
+  "url": "https://huggingface.co/datasets/nasa-impact/WxC-Bench/tree/main/weather_forecast_discussion",
+  "version": "1.0.0",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "wxc-bench-weather-discussion-archive",
+      "name": "wxc-bench-weather-discussion-archive",
+      "description": "WxC-Bench Weather Forecast Discussion dataset repository containing preprocessed HRRR subset grids and text reports",
+      "contentUrl": "https://huggingface.co/datasets/nasa-impact/WxC-Bench/tree/main/weather_forecast_discussion",
+      "encodingFormat": "application/x-directory",
+      "sha256": "1c28ee33652890ce878290c9d35215322ae0cb4d0c06389c32dfe02fcb1e4a54"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "metadata-csv",
+      "name": "metadata-csv",
+      "description": "Storm Prediction Center (SPC) Weather Forecast Discussions metadata mapping in CSV format",
+      "containedIn": {
+        "@id": "wxc-bench-weather-discussion-archive"
+      },
+      "encodingFormat": "text/csv",
+      "includes": "metadata_1yr.csv"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "hrrr-subset-grids",
+      "name": "hrrr-subset-grids",
+      "description": "Preprocessed High-Resolution Rapid Refresh (HRRR) 07Z forecast weather grids in NumPy (.npy) format",
+      "containedIn": {
+        "@id": "wxc-bench-weather-discussion-archive"
+      },
+      "encodingFormat": "application/x-numpy",
+      "includes": "hrrr_subset/*.npy"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "hrrr_weather_grids",
+      "name": "hrrr_weather_grids",
+      "description": "Gridded High-Resolution Rapid Refresh (HRRR) 2D weather fields over CONUS",
+      "geocr:spatialResolution": {
+        "@type": "sc:QuantitativeValue",
+        "unitText": "km",
+        "value": 3
+      },
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "hrrr_weather_grids/filename",
+          "name": "filename",
+          "description": "Filename of the HRRR grid data",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "hrrr-subset-grids"
+            },
+            "extract": {
+              "fileProperty": "filename"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "hrrr_weather_grids/weather_grid",
+          "name": "weather_grid",
+          "description": "Multi-variable surface and atmospheric weather grid array",
+          "cr:arrayShape": "1059,1799,9",
+          "cr:isArray": true,
+          "dataType": "sc:ImageObject",
+          "geocr:bandConfiguration": {
+            "@type": "geocr:BandConfiguration",
+            "geocr:bandNamesList": [
+              "Precipitation rate",
+              "2 metre temperature",
+              "2 metre relative humidity",
+              "10 metre U wind component",
+              "10 metre V wind component",
+              "Total Cloud Cover",
+              "MSLP (MAPS System Reduction)",
+              "Temperature",
+              "Specific humidity"
+            ],
+            "geocr:totalBands": 9
+          },
+          "source": {
+            "fileSet": {
+              "@id": "hrrr-subset-grids"
+            },
+            "extract": {
+              "fileProperty": "content"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "subset_weather_forecast_examples",
+      "name": "subset_weather_forecast_examples",
+      "description": "Preprocessed 100 severe weather benchmark examples (hrrr_subset/*.npy) paired with SPC text discussions",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "subset_weather_forecast_examples/date_key",
+          "name": "date_key",
+          "description": "Date identifier key (YYYYMMDD)",
+          "dataType": "sc:Text",
+          "references": {
+            "fileSet": {
+              "@id": "metadata-csv"
+            },
+            "extract": {
+              "column": "file_name"
+            },
+            "transform": {
+              "regex": "(\\d{8})"
+            }
+          },
+          "source": {
+            "fileSet": {
+              "@id": "hrrr-subset-grids"
+            },
+            "extract": {
+              "fileProperty": "filename"
+            },
+            "transform": {
+              "regex": "^(?:hrrr_subset/)?hrrr\\.(\\d{8})\\.t07z\\.wrfnatf00\\.npy$"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "subset_weather_forecast_examples/discussion",
+          "name": "discussion",
+          "description": "Forecast discussion text from SPC CSV report",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": {
+              "@id": "metadata-csv"
+            },
+            "extract": {
+              "column": "text"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "subset_weather_forecast_examples/weather_grid",
+          "name": "weather_grid",
+          "description": "HRRR weather grid tensor with surface/atmospheric channels",
+          "cr:arrayShape": "1059,1799,9",
+          "cr:isArray": true,
+          "dataType": "sc:ImageObject",
+          "geocr:bandConfiguration": {
+            "@type": "geocr:BandConfiguration",
+            "geocr:bandNamesList": [
+              "Precipitation rate",
+              "2 metre temperature",
+              "2 metre relative humidity",
+              "10 metre U wind component",
+              "10 metre V wind component",
+              "Total Cloud Cover",
+              "MSLP (MAPS System Reduction)",
+              "Temperature",
+              "Specific humidity"
+            ],
+            "geocr:totalBands": 9
+          },
+          "source": {
+            "fileSet": {
+              "@id": "hrrr-subset-grids"
+            },
+            "extract": {
+              "fileProperty": "content"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "prov:wasDerivedFrom": "https://www.ncei.noaa.gov/products/weather-climate-models/high-resolution-rapid-refresh",
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "name": "HRRR Grid Subsetting & SPC Discussion Alignment Activity",
+    "description": "Subsetting 9 HRRR surface fields and pairing with SPC forecast discussion reports.",
+    "prov:used": "https://www.spc.noaa.gov/",
+    "prov:wasAssociatedWith": {
+      "@type": "prov:SoftwareAgent",
+      "name": "NASA IMPACT WxC-Bench Data Processing Pipeline v1.0",
+      "description": "Automated meteorological data processing and multimodal pairing framework."
+    }
+  },
+  "prov:wasAttributedTo": {
+    "@type": "prov:Agent",
+    "name": "NOAA Storm Prediction Center & NASA IMPACT",
+    "url": "https://huggingface.co/datasets/nasa-impact/WxC-Bench"
+  },
+  "usageInfo": {
+    "@type": "odrl:Offer",
+    "name": "Usage Policy",
+    "odrl:permission": {
+      "@type": "odrl:Permission",
+      "odrl:action": {
+        "@id": "odrl:use"
+      },
+      "odrl:constraint": {
+        "@type": "odrl:Constraint",
+        "odrl:leftOperand": {
+          "@id": "odrl:purpose"
+        },
+        "odrl:operator": {
+          "@id": "odrl:eq"
+        },
+        "odrl:rightOperand": {
+          "@id": "duo:DUO_0000042"
+        }
+      }
+    }
+  }
+}
