@@ -1,7 +1,7 @@
 # VEDA DCAI: GeoCroissant Recipes
 
 - **GeoCroissant Recipes & Documentation**: [https://ieee-grss-veda.github.io/veda-dcai/](https://ieee-grss-veda.github.io/veda-dcai/)
-- **Croissant Vocabulary Portal (VDF)**: [https://ieee-grss-veda.github.io/veda-dcai/vdf/](https://ieee-grss-veda.github.io/veda-dcai/vdf/)
+- **GeoCroissant Vocabulary Portal (VDF)**: [https://ieee-grss-veda.github.io/veda-dcai/vdf/](https://ieee-grss-veda.github.io/veda-dcai/vdf/)
 
 ## What is GeoCroissant?
 
@@ -22,7 +22,7 @@ Load a GeoCroissant dataset using the `mlcroissant` Python library:
 ```python
 import mlcroissant as mlc
 
-dataset = mlc.Dataset("geocroissant.json")
+dataset = mlc.Dataset("Introduction to Geocroissant/hls_burn_scars.json")
 ```
 
 ## Conformance
@@ -51,5 +51,5 @@ GeoCroissant Working Group · [croissant-geo@mlcommons.org](mailto:croissant-geo
 - MLCommons GeoCroissant Working Group
 - MLCommons Croissant Working Group
 - Open Geospatial Consortium (OGC) GeoAI Domain Working Group
-- IEEE Geoscience and Remote Sensity Society
+- IEEE Geoscience and Remote Sensing Society
 

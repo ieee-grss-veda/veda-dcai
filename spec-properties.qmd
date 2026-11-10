@@ -49,7 +49,7 @@ The coordinate reference system (CRS) or projection used to interpret spatial da
 
 ### `geocr:spatialResolution`
 
-The nominal ground sampling distance — how much real-world area one pixel covers. Can be set at dataset level for uniform imagery, or at record level when resolution varies across records (e.g., Harmonized Landsat/Sentinel-2).
+The ground sampling distance (real-world area covered per pixel). Can be set at dataset level for uniform imagery, or at record level when resolution varies across records (such as Harmonized Landsat/Sentinel-2).
 
 | | |
 |---|---|
@@ -102,7 +102,7 @@ Precomputed spatial index tokens (e.g., H3 cells, DGGS identifiers, geohashes) t
 
 ### `geocr:bandConfiguration`
 
-Describes how bands are organised within a raster dataset — how many there are, in what order, and what they represent. Can be set at dataset or field level.
+Describes band organization within a raster dataset: total count, order, and names. Can be set at dataset or field level.
 
 | | |
 |---|---|
@@ -115,7 +115,7 @@ Describes how bands are organised within a raster dataset — how many there are
   "geocr:bandConfiguration": {
     "@type": "geocr:BandConfiguration",
     "geocr:totalBands": 6,
-    "geocr:bandNameList": ["Blue", "Green", "Red", "NIR", "SW1", "SW2"]
+    "geocr:bandNamesList": ["Blue", "Green", "Red", "NIR", "SWIR1", "SWIR2"]
   }
 }
 ```
@@ -138,7 +138,7 @@ The total number of bands in the raster asset.
 
 ---
 
-### `geocr:bandNameList`
+### `geocr:bandNamesList`
 
 An ordered list of band names corresponding to the raster band stack.
 
@@ -149,14 +149,14 @@ An ordered list of band names corresponding to the raster band stack.
 | **Cardinality** | MANY |
 
 ```json
-"geocr:bandNameList": ["Blue", "Green", "Red", "NIR", "SW1", "SW2"]
+"geocr:bandNamesList": ["Blue", "Green", "Red", "NIR", "SWIR1", "SWIR2"]
 ```
 
 ---
 
 ### `geocr:spectralBandMetadata`
 
-Per-band spectral descriptors — center wavelength, bandwidth, and similar physical quantities. Use this when downstream systems or models need band physics beyond simple names.
+Per-band physical descriptors, such as center wavelength and bandwidth. Use this when models require physical band characteristics rather than names alone.
 
 | | |
 |---|---|
@@ -220,7 +220,7 @@ The spectral bandwidth (full-width at half-maximum) for a band entry.
 
 ### `geocr:temporalResolution`
 
-The temporal cadence of the collection — how frequently observations are taken. Can be set at dataset or record level when cadence varies.
+Observation frequency for the collection (for example, every 5 days or monthly). Can be set at dataset or record level.
 
 | | |
 |---|---|
@@ -236,7 +236,7 @@ The temporal cadence of the collection — how frequently observations are taken
 
 ### `geocr:timeSeriesIndex`
 
-Identifies the field within a RecordSet that provides the temporal ordering key — typically a timestamp. This allows downstream systems to sort, slice, and batch time-series records reliably.
+Identifies the field within a RecordSet providing the temporal ordering key (typically a timestamp). Downstream pipelines use this field to sort, slice, and batch sequences.
 
 | | |
 |---|---|
@@ -260,7 +260,7 @@ Identifies the field within a RecordSet that provides the temporal ordering key 
 
 ### `geocr:spatialBias`
 
-A plain-language description of any known geographic representativeness limitations that could affect model generalisation — for example, if coverage is concentrated in one region or continent.
+Documents geographic coverage boundaries or regional concentrations that affect model generalization (for example, data collected only in temperate zones).
 
 | | |
 |---|---|
@@ -276,7 +276,7 @@ A plain-language description of any known geographic representativeness limitati
 
 ### `geocr:samplingStrategy`
 
-Describes how training samples were constructed — including windowing strategies, filtering criteria, and any design choices that influence what the model learns.
+Documents how training samples were generated, including bounding box selection, window dimensions, and cloud cover thresholds.
 
 | | |
 |---|---|
@@ -337,7 +337,7 @@ A composite wrapper describing the wavelength channels used in a space weather o
 
 ### `geocr:solarInstrumentCharacteristics`
 
-A composite wrapper for solar instrument characterisation — observatory and instrument identifiers — to support mapping to SPASE.
+Composite structure for observatory and instrument identifiers, enabling mapping to SPASE standards.
 
 | | |
 |---|---|

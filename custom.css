@@ -2,3 +2,19 @@
   max-width: 150px;
   max-height: 120px;
 }
+
+/* Ensure headings, tables, rules, and code blocks never collide with floated logos */
+h1, h2, h3, h4, h5, h6, table, .table, hr, .cell {
+  clear: both;
+}
+
+/* Ensure chapter titles never render code badges inside H1 */
+h1.title code,
+.chapter-title code {
+  background-color: transparent !important;
+  color: inherit !important;
+  border: none !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  padding: 0 !important;
+}

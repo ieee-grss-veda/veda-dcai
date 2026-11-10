@@ -3,22 +3,20 @@ title: "Use Cases"
 format: html
 ---
 
-GeoCroissant is designed to serve a wide range of GeoAI workflows. The sections below walk through nine representative use cases, each highlighting the relevant properties, design patterns, and practical considerations.
+GeoCroissant addresses common integration patterns in geospatial machine learning. The sections below outline nine use cases, their relevant properties, and practical implementation examples.
 
 ---
 
 ## Use Case 1: Space Weather Datasets
 
-Space weather datasets from missions like NASA's GOES satellites present a unique challenge: their metadata follows the SPASE (Space Physics Archive Search and Extract) standard, which uses domain-specific constructs for observatories, instruments, and wavelength channels — none of which exist in the core Croissant vocabulary.
+Heliophysics and space weather datasets (such as solar imagery from NASA's SDO and GOES satellites) follow the SPASE standard. These datasets use observatories, instruments, and wavelength channels rather than geographic bounding boxes and projections.
 
-GeoCroissant addresses this through two composite properties that simplify authoring and enable downstream mapping to SPASE:
+GeoCroissant provides two composite structures for this domain:
 
 | Property | Purpose |
 |---|---|
-| `geocr:multiWavelengthConfiguration` | Captures wavelength channels (e.g., via `geocr:channelList`) |
-| `geocr:solarInstrumentCharacteristics` | Captures observatory and instrument identifiers |
-
-A proof-of-concept tool, *SPASECroissant Oven*, demonstrated how LLMs and custom parsing logic can automate conversion from SPASE XML to GeoCroissant, including inference of measurement types, data types, and column descriptors.
+| `geocr:multiWavelengthConfiguration` | Lists wavelength channels (e.g. via `geocr:channelList`) |
+| `geocr:solarInstrumentCharacteristics` | Records observatory and instrument identifiers |
 
 ```json
 {
@@ -34,11 +32,13 @@ A proof-of-concept tool, *SPASECroissant Oven*, demonstrated how LLMs and custom
 }
 ```
 
+Recipe: [Space Weather & Heliophysics (SDO)](Solar Dynamics Observatory GeoCroissant/SDO GeoCroissant.ipynb).
+
 ---
 
 ## Use Case 2: Interoperability with Other Standards
 
-Geospatial data infrastructures depend on standards alignment. This use case shows how GeoCroissant fields map to equivalent concepts in STAC and GeoDCAT, enabling automated format conversion and integration with existing catalogs.
+Geospatial workflows frequently require translating metadata between catalog systems. GeoCroissant fields map directly to equivalent concepts in STAC and GeoDCAT:
 
 | STAC Field | GeoCroissant Field | External Vocabulary |
 |---|---|---|
@@ -52,28 +52,22 @@ Geospatial data infrastructures depend on standards alignment. This use case sho
 | `gsd` | `geocr:spatialResolution` | `stac:gsd` |
 | `eo:bands` | `geocr:bandConfiguration`, `geocr:spectralBandMetadata` | STAC EO extension |
 
-**Key properties in use:**
-
-| Property | Purpose |
-|---|---|
-| `geocr:coordinateReferenceSystem` | Ensures consistent spatial referencing across tools |
-| `geocr:spatialResolution` | Supports discovery and ML-readiness via resolution metadata |
-| `geocr:bandConfiguration` | Standardises multi-band raster organisation for interoperable use |
+Recipes: [GeoCroissant to STAC](GeoCroissant to STAC/conversion-stac-notebook.ipynb) and [GeoCroissant to GeoDCAT](GeoCroissant to GeoDCAT/conversion-geodcat-notebook.ipynb).
 
 ---
 
 ## Use Case 3: Programmatic Metadata Access
 
-When a dataset's metadata is maintained in a dynamic catalog or registry, GeoCroissant can point clients directly to the relevant endpoint using `geocr:recordEndpoint`. This aligns with the OGC API – Records standard, which defines a RESTful interface for publishing and querying metadata records.
+When dataset metadata is hosted in an active catalog or registry, `geocr:recordEndpoint` points clients to the query endpoint. This aligns with the OGC API - Records specification.
 
-Clients can retrieve record-level metadata and apply spatial or temporal filters:
+Clients can query records with spatial and temporal filters:
 
-```
+```http
 GET /api/records?bbox=-125,24,-66,49
 GET /api/records?datetime=2018-01-01/2021-12-31
 ```
 
-The returned GeoJSON FeatureCollection can be consumed directly by web clients, spatial dashboards, and registry services.
+The resulting GeoJSON FeatureCollection can be parsed directly by spatial clients:
 
 ```json
 {
@@ -92,45 +86,19 @@ The returned GeoJSON FeatureCollection can be consumed directly by web clients, 
 }
 ```
 
-**Key property in use:**
-
-| Property | Purpose |
-|---|---|
-| `geocr:recordEndpoint` | Declares the OGC API endpoint for programmatic record retrieval and filtering |
-
 ---
 
 ## Use Case 4: Search and Discovery via GeoSPARQL
 
-GeoCroissant can express geometry using GeoSPARQL vocabulary terms, enabling spatial reasoning over RDF datasets in semantic graph databases such as GraphDB. The optional `geocr:spatialIndex` property provides efficient coarse filtering before exact geometry operations are evaluated.
+GeoCroissant expresses geometries using GeoSPARQL predicates, enabling spatial queries over RDF datasets in triplestores such as GraphDB. The `geocr:spatialIndex` property provides fast index-based filtering before polygon comparisons.
 
-See [Appendix C](spec-appendix.qmd#appendix-c-geosparql-query-examples) for full SPARQL query examples.
-
-**Key properties in use:**
-
-| Property | Purpose |
-|---|---|
-| `geocr:spatialIndex` | Precomputed spatial index tokens for scalable coarse filtering |
-| `geosparql:hasGeometry` | Links a dataset or record to a GeoSPARQL geometry node |
-| `geosparql:asWKT` | Encodes geometry as a WKT typed literal |
-| `cr:recordSet` | Exposes record-level metadata entries for individual querying |
+See [Appendix B](spec-appendix.qmd#appendix-b-geosparql-query-examples) for query examples.
 
 ---
 
-## Use Case 5: ML Pipeline Integration
+## Use Case 5: ML Pipeline Ingestion
 
-Given a GeoAI dataset with image–label pairs, GeoCroissant metadata can drive end-to-end ML workflows with minimal boilerplate.
-
-**Loading metadata with mlcroissant:**
-
-```python
-import mlcroissant as mlc
-
-dataset = mlc.Dataset("geocroissant.json")
-print(dataset.metadata.to_json())
-```
-
-**Custom PyTorch DataLoader using GeoCroissant:**
+GeoCroissant metadata loads directly into PyTorch, TensorFlow, and JAX datasets without custom format glue code.
 
 ```python
 import mlcroissant as mlc
@@ -141,60 +109,50 @@ import numpy as np
 from pathlib import Path
 
 # Load dataset metadata
-dataset = mlc.Dataset("geocroissant.json")
+dataset = mlc.Dataset("Introduction to Geocroissant/hls_burn_scars.json")
 metadata = dataset.metadata
-base_path = Path(metadata.distribution[0].content_url)
-image_files = sorted(base_path.glob(metadata.distribution[1].includes[0]))
 
-class CroissantDataset(Dataset):
-    def __init__(self, image_paths, split=None):
-        self.image_paths = [p for p in image_paths if split in str(p)] if split else image_paths
+class HLSDataset(Dataset):
+    def __init__(self, records):
+        self.records = records
 
     def __len__(self):
-        return len(self.image_paths)
+        return len(self.records)
 
     def __getitem__(self, idx):
-        image_path = self.image_paths[idx]
-        mask_path = str(image_path).replace("_merged.tif", ".mask.tif")
-        with rasterio.open(image_path) as src:
+        rec = self.records[idx]
+        with rasterio.open(rec["image"]) as src:
             image = src.read().astype(np.float32)
-        with rasterio.open(mask_path) as src:
+        with rasterio.open(rec["mask"]) as src:
             mask = src.read(1).astype(np.int64)
         return {"image": torch.from_numpy(image), "mask": torch.from_numpy(mask)}
-
-train_loader = DataLoader(CroissantDataset(image_files, split="training"), batch_size=1)
 ```
+
+Recipe: [Introduction to GeoCroissant](Introduction to Geocroissant/Introduction to Geocroissant.ipynb).
 
 ---
 
-## Use Case 6: Responsible GeoAI
+## Use Case 6: Responsible GeoAI Documentation
 
-Responsible AI metadata documents the full lifecycle, provenance, and intended use of a dataset. GeoCroissant complements the [Croissant RAI extension](http://mlcommons.org/croissant/RAI/1.0) with two geospatially aware properties: `geocr:spatialBias` and `geocr:samplingStrategy`.
-
-Using the HLS Burn Scar dataset as an example:
+Responsible AI metadata documents dataset origins, known geographic omissions, and sampling rules. GeoCroissant extends the [Croissant RAI extension](http://mlcommons.org/croissant/RAI/1.0) with spatial fields:
 
 ```json
 {
-  "geocr:spatialBias": "Spatial coverage is concentrated over the contiguous United States; high-latitude regions and other global biomes are under-represented.",
-  "geocr:samplingStrategy": "512×512 chips are sampled by centring windows on burn-scar polygons; scenes are filtered to remove high cloud cover and missing data.",
+  "geocr:spatialBias": "Spatial coverage is concentrated over the contiguous United States; high-latitude regions and other global biomes are not represented.",
+  "geocr:samplingStrategy": "512x512 pixel chips were sampled by centering windows on burn-scar polygons; cloudy scenes were removed.",
   "rai:dataCollection": "Chips generated by co-locating HLS scenes with reference burn polygons.",
-  "rai:dataBiases": "Potential geographic bias (CONUS focus), temporal bias (2018–2021), and class imbalance between burned and unburned pixels.",
-  "rai:dataUseCases": ["Training", "Validation", "Testing", "Fine-tuning"]
+  "rai:dataBiases": "Geographic bias (CONUS only) and temporal bias (2018-2021).",
+  "rai:dataUseCases": ["Training", "Validation", "Testing"]
 }
 ```
 
-**Key properties in use:**
-
-| Property | Purpose |
-|---|---|
-| `geocr:spatialBias` | Documents geographic representativeness limitations |
-| `geocr:samplingStrategy` | Describes chip/windowing strategy and filtering decisions |
+Recipe: [Responsible AI Specifications](GeoCroissant & Responsible AI (RAI) Specs/GeoCroissant (RAI) Specifications.ipynb).
 
 ---
 
-## Use Case 7: Time-Series Support
+## Use Case 7: Time-Series Earth Observation
 
-Time-series EO datasets power GeoAI tasks like change detection, phenology monitoring, and forecasting. GeoCroissant supports these workflows with explicit temporal ordering via `geocr:timeSeriesIndex` and cadence documentation via `geocr:temporalResolution`.
+Time-series models for change detection and crop monitoring require explicit chronological sequencing. GeoCroissant declares the timestamp field with `geocr:timeSeriesIndex` and observation cadence with `geocr:temporalResolution`:
 
 ```json
 {
@@ -214,21 +172,22 @@ Time-series EO datasets power GeoAI tasks like change detection, phenology monit
         "@type": "cr:Field",
         "@id": "timeseries_recordset/image",
         "name": "image",
-        "dataType": "sc:ImageObject",
-        "cr:arrayShape": [3660, 3660, 13]
+        "dataType": "sc:ImageObject"
       }
     ]
   }]
 }
 ```
 
+Recipe: [Time-Series Support](GeoCroissant Time-Series Support/GeoCroissant Time-Series Support.ipynb).
+
 ---
 
-## Use Case 8: Adding Custom Properties
+## Use Case 8: Custom Vocabulary Terms
 
-When a required attribute is already defined in an established vocabulary (GeoSPARQL, SPASE, Dublin Core), GeoCroissant recommends reusing that term directly by declaring the appropriate prefix in `@context`.
+When an attribute already exists in an established standard (GeoSPARQL, SPASE, Dublin Core), declare the prefix in `@context` and use the term directly.
 
-When no suitable external term exists, use `sc:additionalProperty` with `sc:PropertyValue`:
+When no existing vocabulary applies, use `sc:additionalProperty` with `sc:PropertyValue`:
 
 ```json
 {
@@ -249,10 +208,8 @@ When no suitable external term exists, use `sc:additionalProperty` with `sc:Prop
 
 ---
 
-## Use Case 9: Caching AI-Ready Transformations
+## Use Case 9: Scientific Container Mappings
 
-Large geospatial datasets in formats like NetCDF and Zarr often require preprocessing before they are suitable for GPU-accelerated training. Caching these AI-ready transformations avoids repeated computation and optimises data throughput.
+Scientific data containers (GeoParquet, HDF5, NetCDF) organize arrays into internal tables, groups, and chunks. GeoCroissant maps individual fields directly to container paths without requiring data duplication.
 
-In this pattern, source data undergoes extraction, filtering, and transformation in advance. The result — an AI-ready Zarr store — is referenced via a standard Croissant `cr:FileObject`, while GeoCroissant metadata provides the spatial and temporal context. The `mlcroissant` library can then load these datasets as easily as a CSV file, allowing data scientists to focus on training and evaluation while the tooling handles data access at scale.
-
-Extensions to the `mlcroissant` library are under development to support native Zarr payloads alongside existing format support.
+Recipes: [GeoParquet to GeoCroissant](GeoCroissant GeoParquet Support/GeoParquet to GeoCroissant.ipynb) and [Landslide4Sense HDF5 to GeoCroissant](Landslide4Sense-HDF5 GeoCroissant/Landslide4Sense-HDF5 GeoCroissant.ipynb).

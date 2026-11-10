@@ -1,37 +1,35 @@
 # GeoCroissant Metadata Standard
 
-GeoCroissant is an extension of the MLCommons Croissant metadata standard explicitly designed for Earth Observation and Geospatial Machine Learning datasets. 
-
-It aims to make GeoAI datasets more findable, accessible, interoperable, and reusable (FAIR) by providing structured, machine-actionable metadata.
+GeoCroissant extends MLCommons Croissant with geospatial properties for Earth observation and machine learning datasets. It provides structured, machine-actionable metadata so tools and frameworks can find, index, and load geospatial data directly into training pipelines.
 
 ## Core Geospatial Extensions
 
-GeoCroissant adds several key geospatial properties to the core Croissant standard:
+GeoCroissant adds five main property groups to Croissant:
 
-1. **`spatialCoverage`** and **`temporalCoverage`**: Define the specific geographic extent (bounding boxes) and temporal range of the dataset. 
-2. **`geocr:coordinateReferenceSystem`**: The CRS identifier (e.g., "EPSG:4326") necessary to properly align data on Earth.
-3. **`geocr:spatialResolution`** & **`geocr:temporalResolution`**: Defines the physical spacing between pixels/points (e.g., `<value> 30, <unitText> 'm'`) and the time interval between observations.
-4. **`geocr:bandConfiguration`**: Describes multidimensional data structures typical in remote sensing, mapping the number of bands and their logical order.
-5. **`geocr:spectralBandMetadata`**: Per-band physical descriptors such as `centerWavelength` and `bandwidth`.
+1. **Spatial and temporal bounds**: `spatialCoverage` (geographic bounding box or geometry) and `temporalCoverage` (observation date or range).
+2. **Coordinate reference systems**: `geocr:coordinateReferenceSystem` identifies the projection (such as `EPSG:4326` or `EPSG:32610`) required to locate pixels on Earth.
+3. **Resolution**: `geocr:spatialResolution` gives the ground sampling distance (e.g. 30 meters per pixel), and `geocr:temporalResolution` defines observation frequency.
+4. **Band layout**: `geocr:bandConfiguration` defines the total band count and ordered band names (`geocr:bandNamesList`).
+5. **Physical band physics**: `geocr:spectralBandMetadata` describes individual channels with `geocr:centerWavelength` and `geocr:bandwidth`.
 
-## Using GeoCroissant
+## Conformance
 
-A compliant dataset must declare conformance to both Croissant and GeoCroissant vocabularies via its context and `conformsTo` fields:
+Datasets declare conformance in the `@context` and `dct:conformsTo` fields:
 
 ```json
 "conformsTo": [
-    "http://mlcommons.org/croissant/1.1",
-    "http://mlcommons.org/croissant/geo/1.0"
+  "http://mlcommons.org/croissant/1.1",
+  "http://mlcommons.org/croissant/geo/1.0"
 ]
 ```
 
-### Example Implementation
+## Example Record
 
-Here is a simplified example of how optical satellite characteristics are structured using the `geocr` namespace:
+This snippet shows optical sensor properties structured with the `geocr` vocabulary:
 
 ```json
 {
-  "geocr:coordinateReferenceSystem": "EPSG:4326",
+  "geocr:coordinateReferenceSystem": "EPSG:32610",
   "geocr:spatialResolution": {
     "@type": "QuantitativeValue",
     "value": 30.0,
@@ -40,7 +38,7 @@ Here is a simplified example of how optical satellite characteristics are struct
   "geocr:bandConfiguration": {
     "@type": "geocr:BandConfiguration",
     "geocr:totalBands": 6,
-    "geocr:bandNameList": ["Blue", "Green", "Red", "NIR", "SWIR1", "SWIR2"]
+    "geocr:bandNamesList": ["Blue", "Green", "Red", "NIR", "SWIR1", "SWIR2"]
   },
   "geocr:spectralBandMetadata": [
     {
@@ -61,9 +59,10 @@ Here is a simplified example of how optical satellite characteristics are struct
 }
 ```
 
-## Advanced & Responsible GeoAI Domains
+## Domain Extensions
 
-Beyond standard image parameters, GeoCroissant provides hooks for specialized domains and robust AI practices:
-- **`geocr:samplingStrategy`** & **`geocr:spatialBias`**: Documents biases relative to geography (e.g., heavily sampled North America vs under-sampled global south) making downstream AI more responsible.
-- **Space Weather & Heliophysics**: `geocr:MultiWavelengthConfiguration` and `geocr:SolarInstrumentCharacteristics` cater to multi-channel solar observations.
-- **Data Discovery**: `geocr:spatialIndex` accommodates rapid catalog indexing based on spatial tiling schemes (like DGGS) to process massive web-hosted datasets efficiently.
+The specification includes fields for specific workflows:
+
+- **Responsible AI (`geocr:spatialBias`, `geocr:samplingStrategy`)**: Documents geographic imbalances (such as datasets sampled primarily over North America) and windowing methods used to cut image chips.
+- **Space weather & heliophysics (`geocr:multiWavelengthConfiguration`, `geocr:solarInstrumentCharacteristics`)**: Encodes solar instrument channels and observatories (such as SDO/AIA) without geographic coordinates.
+- **Spatial indexing (`geocr:spatialIndex`)**: Holds precomputed discrete global grid tokens (such as H3 or S2 cells) for fast catalog lookups before polygon intersections.

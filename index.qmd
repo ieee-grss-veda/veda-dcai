@@ -51,30 +51,31 @@ GeoCroissant (http://mlcommons.org/croissant/geo/1.0) is a metadata extension th
 ## Notebook Categories
 
 ### Introduction
-Core concepts and fundamental implementation patterns for GeoCroissant metadata.
+Core concepts, fundamental implementation patterns for GeoCroissant metadata, and the complete [Metadata Catalog & JSON Artifacts](json-metadata.qmd).
 
 ### Catalog to GeoCroissant
-Convert geospatial catalog metadata to GeoCroissant format from STAC, NASA UMM-G, CEDA CMIP6, and Google Earth Engine.
+Convert geospatial catalog metadata to GeoCroissant format from STAC, NASA UMM, CEDA CMIP6, Google Earth Engine, and Kaggle.
 
 ### Data Format to GeoCroissant
-Generate GeoCroissant metadata from cloud-optimized geospatial data formats including GeoParquet, HDF5, NetCDF, and Zarr.
+Generate GeoCroissant metadata from geospatial data formats including GeoParquet, Landslide4Sense HDF5, and Solar Dynamics Observatory (SDO) NetCDF.
 
 ### GeoCroissant Extensions
-Advanced features for time-series Earth observation data and OGC Training Data Markup Language integration.
+Multi-temporal Earth observation time-series support and bidirectional OGC Training Data Markup Language (TrainingDML-AI) conversions.
 
 ### GeoCroissant RAI
-Integrate RAI specification with GeoCroissant to document data provenance, access policies, and responsible AI-metadata for EO datasets.
+Responsible AI specifications for spatial bias documentation, geographic sampling strategies, and metadata governance.
 
 ### GeoCroissant to Standards
-Export GeoCroissant metadata to STAC and GeoDCAT formats for interoperability.
+Export and validate GeoCroissant metadata against STAC and GeoDCAT standards with SHACL verification.
 
 ## ML Framework Integration
 
-GeoCroissant datasets integrate with PyTorch, TensorFlow, and JAX using the mlcroissant Python library:
+GeoCroissant datasets load into PyTorch, TensorFlow, and JAX using `mlcroissant`:
 
 ```python
 import mlcroissant as mlc
-dataset = mlc.Dataset("geocroissant.json")
+
+dataset = mlc.Dataset("Introduction to Geocroissant/hls_burn_scars.json")
 ```
 
 ## FAIR Principles

@@ -5,60 +5,53 @@ format: html
 
 ## Why Metadata Matters
 
-Data without context is difficult to use responsibly. Metadata provides the background needed to understand where a dataset came from, what it represents, how it was collected, and under what terms it can be reused. Without it, datasets are frequently misunderstood, underused, or duplicated unnecessarily.
+Geospatial data requires explicit context to be usable. Raw pixel values require a coordinate reference system to align on a map. Time-series observations require a known sampling cadence. Burned-area masks require spatial resolution to determine ground area.
 
-For geospatial and Earth observation data in particular, metadata is not optional — it is foundational. A pixel value means nothing without a coordinate reference system. A time series cannot be interpreted without knowing its temporal cadence. A burned-area mask is ambiguous without knowing the spatial resolution of the underlying imagery.
+Structured metadata provides four practical benefits:
 
-Consistently structured metadata enables:
+- **Discovery**: Search engines and catalogs can index spatial bounds, sensors, and dates.
+- **Interoperability**: Datasets from different providers can be reprojected and combined without guessing formats.
+- **Reproducibility**: Training runs can record exact data versions, band orders, and splits.
+- **Provenance**: Licensing, instrument details, and sampling strategies travel with the data files.
 
-- **Discovery** — search engines and catalogs can index and surface relevant datasets
-- **Interoperability** — datasets from different sources can be aligned and compared
-- **Reproducibility** — training runs can be documented and repeated reliably
-- **Responsible reuse** — licensing, provenance, and bias information travel with the data
-
-Initiatives like the Group on Earth Observations (GEO) Data Sharing Principles, the OECD Recommendation on Research Data, and the European Open Science Cloud (EOSC) all underscore the same point: transparent, well-documented data stewardship is a prerequisite for trustworthy science and AI.
+Data guidelines from the Group on Earth Observations (GEO), the OECD, and the European Open Science Cloud (EOSC) emphasize clear documentation as a baseline requirement for scientific and machine learning workflows.
 
 ## Metadata for ML-Ready Datasets
 
-Machine learning is only as good as the data behind it. Yet, the absence of consistent dataset descriptions has long been a barrier to progress in ML research. Without clear metadata, exploring a new dataset requires manual inspection, undocumented trial and error, and often direct contact with the original data producer.
+Incomplete dataset documentation creates friction in machine learning pipelines. Without clear descriptions of band order, data types, and file layouts, engineers must inspect files manually and write one-off parsing scripts.
 
-The Croissant metadata format addresses this by providing a standardised, schema.org-based vocabulary for describing ML datasets. It streamlines how datasets are loaded into popular frameworks — PyTorch, TensorFlow, JAX — and brings structure to key aspects of the ML data lifecycle:
+The Croissant format addresses this with a schema.org-based vocabulary for machine learning datasets. It gives structure to:
 
-- Dataset attributes, splits, and file layouts
-- Licensing and citation information
-- Responsible AI (RAI) documentation via the [Croissant RAI extension](https://mlcommons.org/croissant/RAI/1.0)
+- RecordSets, splits, and file paths
+- Licenses and citations
+- Responsible AI attributes via the [Croissant RAI extension](https://mlcommons.org/croissant/RAI/1.0)
+- Framework ingestion for PyTorch, TensorFlow, and JAX through `mlcroissant`
 
-Croissant also improves discoverability. When publishers create Croissant metadata and host it in compatible repositories, search engines can surface datasets that were previously buried or invisible.
+## Geospatial AI (GeoAI) Requirements
 
-## Geospatial Artificial Intelligence (GeoAI)
+Geospatial AI trains models on location-based data, including optical imagery, SAR, airborne surveys, and numerical weather models. These datasets present challenges not found in generic computer vision or NLP:
 
-Geospatial AI applies machine learning and deep learning to location-based data — satellite imagery, airborne sensors, in-situ measurements, simulation outputs — for tasks like climate modelling, disaster response, urban planning, and crop yield prediction.
+1. **Spatial reference systems**: Pixel coordinates map to real coordinates on Earth. Mismatched datums or projections lead to misaligned inputs.
+2. **Band configuration**: Multispectral sensors produce dozens of channels with specific center wavelengths and bandwidths rather than standard RGB.
+3. **Spatial sampling**: Satellite scenes cover large geographic extents. Chips must be sampled with recorded bounding boxes and window sizes to document geographic distribution.
+4. **Temporal frequency**: Remote sensing observations repeat on satellite orbital schedules (e.g. 5-day revisit for Sentinel-2), requiring explicit timestamps and cadence metadata.
+5. **Container formats**: Data arrives in scientific formats such as GeoParquet, HDF5, and NetCDF, requiring field-level pointers to nested arrays.
 
-GeoAI datasets introduce complexity that generic ML datasets simply don't have:
+## GeoCroissant Extensions
 
-1. **Location is critical.** Geolocation errors or coarse spatial annotations directly degrade model predictions.
-2. **Sampling matters.** Petabyte-scale datasets require careful curation to avoid class imbalance and ensure fair geographic representation.
-3. **Data has a shelf life.** Temporally stale data reduces model relevance and generalisation.
-4. **Cloud-first access.** Centralised, cloud-optimised storage is essential for large-scale training and reproducible collaboration.
-5. **End-to-end pipeline support.** Metadata-rich formats allow seamless ingestion across the full AI workflow.
+GeoCroissant adds geospatial properties to the core Croissant schema:
 
-Good GeoAI starts with good metadata — and that is precisely the gap that GeoCroissant is designed to fill.
-
-## Croissant and GeoAI Datasets
-
-Croissant provides a strong foundation for ML dataset metadata, but it was not designed with the specific demands of Earth observation in mind. The table below illustrates where the gaps lie and how GeoCroissant closes them.
-
-| Geospatial Dataset Type | Challenge in GeoAI | How GeoCroissant Helps |
+| Dataset Category | Challenge | GeoCroissant Solution |
 |---|---|---|
-| EO imagery (multi-band; optical/SAR) | Band semantics and sensor-specific acquisition parameters | Standardised sensor and band descriptors, ML task metadata |
-| Spatiotemporal datasets (time series, in-situ, simulations) | Time indexing and spatiotemporal coverage consistency | Temporal modelling and time-series index support |
-| Complex geo formats (NetCDF, HDF5, Zarr) | Nested variables, chunking, multiple assets per logical sample | Clear mapping from raw containers to AI-ready datasets |
-| Mixed geometry data (vector, raster, point clouds) | Heterogeneous geometry types and spatial reference handling | Uniform spatial semantics and query support |
-| Human-labelled / crowdsourced GeoAI datasets | Sampling choices and spatial representativeness affect outcomes | Explicit provenance, spatial bias, and sampling documentation |
+| Multispectral / SAR imagery | Band semantics and physical wavelengths | `geocr:bandConfiguration`, `geocr:spectralBandMetadata` |
+| Spatiotemporal observations | Irregular time intervals and ordering | `geocr:temporalResolution`, `geocr:timeSeriesIndex` |
+| Scientific containers (HDF5, NetCDF, GeoParquet) | Internal arrays, multidimensional chunks | RecordSet field mappings to container keys and paths |
+| Space weather & solar physics | Non-geographic coordinates (wavelength channels) | `geocr:multiWavelengthConfiguration`, `geocr:solarInstrumentCharacteristics` |
+| Training samples & chip datasets | Unbalanced geographic coverage | `geocr:spatialBias`, `geocr:samplingStrategy` |
 
-## Sample GeoCroissant Metadata
+## Example Record: HLS Burn Scars
 
-Below is a representative GeoCroissant metadata record for the [HLS Burn Scars](https://huggingface.co/datasets/ibm-nasa-geospatial/hls_burn_scars) dataset on Hugging Face. It demonstrates how key geospatial and ML descriptors come together in a single, machine-readable document.
+The JSON-LD record below describes the Harmonized Landsat Sentinel-2 (HLS) Burn Scars dataset:
 
 ```json
 {
@@ -83,8 +76,8 @@ Below is a representative GeoCroissant metadata record for the [HLS Burn Scars](
     "arrayShape": "cr:arrayShape"
   },
   "@type": "Dataset",
-  "name": "GeoCroissant Example: HLS Burn Scars",
-  "description": "Minimal GeoCroissant example illustrating CRS, spatial/temporal coverage, spatial resolution, band configuration, per-band spectral metadata, and RecordSets for images and masks.",
+  "name": "hls-burn-scars",
+  "description": "Harmonized Landsat-Sentinel-2 Burn Scars dataset for wildfire detection.",
   "datePublished": "2024-01-01",
   "version": "1.0",
   "conformsTo": [
@@ -94,27 +87,32 @@ Below is a representative GeoCroissant metadata record for the [HLS Burn Scars](
   "license": "https://creativecommons.org/licenses/by/4.0/",
   "spatialCoverage": {
     "@type": "Place",
-    "geo": { "@type": "GeoShape", "box": "24.0 -125.0 49.0 -66.0" }
+    "geo": { "@type": "GeoShape", "box": "24.396308 -124.848974 49.384358 -66.885444" }
   },
   "temporalCoverage": "2018-01-01/2021-12-31",
-  "geocr:coordinateReferenceSystem": "EPSG:4326",
-  "geocr:spatialResolution": { "@type": "QuantitativeValue", "value": 30, "unitText": "m" },
+  "geocr:coordinateReferenceSystem": "EPSG:32610",
+  "geocr:spatialResolution": {
+    "@type": "QuantitativeValue",
+    "value": 30,
+    "unitText": "m"
+  },
   "geocr:bandConfiguration": {
     "@type": "geocr:BandConfiguration",
     "geocr:totalBands": 6,
-    "geocr:bandNameList": ["Blue", "Green", "Red", "NIR", "SW1", "SW2"]
+    "geocr:bandNamesList": ["Blue", "Green", "Red", "NIR", "SWIR1", "SWIR2"]
   },
   "geocr:spectralBandMetadata": [
     {
       "@type": "geocr:SpectralBand",
       "name": "Blue",
       "geocr:centerWavelength": { "@type": "QuantitativeValue", "value": 490, "unitText": "nm" },
-      "geocr:bandwidth": { "@type": "QuantitativeValue", "value": 98, "unitText": "nm" }
+      "geocr:bandwidth": { "@type": "QuantitativeValue", "value": 65, "unitText": "nm" }
     },
     {
       "@type": "geocr:SpectralBand",
       "name": "NIR",
-      "geocr:centerWavelength": { "@type": "QuantitativeValue", "value": 865, "unitText": "nm" }
+      "geocr:centerWavelength": { "@type": "QuantitativeValue", "value": 865, "unitText": "nm" },
+      "geocr:bandwidth": { "@type": "QuantitativeValue", "value": 33, "unitText": "nm" }
     }
   ]
 }

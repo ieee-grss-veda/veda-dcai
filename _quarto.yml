@@ -1,6 +1,13 @@
 project:
   type: book
   output-dir: _book
+  resources:
+    - "**/*.json"
+    - "**/*.jsonld"
+    - "**/*.ttl"
+    - "**/*.parquet"
+    - "**/*.jsonl"
+    - "vdf/**"
 
 book:
   title: "GeoCroissant Recipes"
@@ -14,7 +21,7 @@ book:
   page-navigation: true
   sidebar:
    search: true
-   logo: "asset/GeoCroissant.jpg"
+   logo: "assets/geocr.jpg"
   page-footer:
     left: "GeoCroissant Recipes | [Vocabulary Portal](vdf/index.html)"
     center: "License: CC BY-ND 4.0"
@@ -29,7 +36,9 @@ book:
         - text: "Overview of GeoCroissant"
           file: geocroissant_overview.md
         - text: "Introduction to GeoCroissant"
-          file: "Introduction_to_GeoCroissant/Introduction_to_GeoCroissant.ipynb"
+          file: "Introduction to Geocroissant/Introduction to Geocroissant.ipynb"
+        - text: "Metadata Catalog & JSON Artifacts"
+          file: json-metadata.qmd
     - part: "**Specification**"
       chapters:
         - text: "Background & Motivation"
@@ -43,43 +52,41 @@ book:
     - part: "**Catalog to GeoCroissant**"
       chapters:
         - text: "STAC to GeoCroissant"
-          file: "STAC_to_GeoCroissant/stac_to_geocroissant.ipynb"
-        - text: "NASA UMM-G to GeoCroissant"
-          file: "NASA_UMM_to_GeoCroissant/NASA_UMM_G_to_GeoCroissant.ipynb"
+          file: "STAC to GeoCroissant/STAC to Geocroissant.ipynb"
+        - text: "NASA UMM to GeoCroissant"
+          file: "Unified Metadata Model to GeoCroissant/NASA-UMM to GeoCroissant.ipynb"
         - text: "CEDA CMIP6 to GeoCroissant"
-          file: "CEDA_UK_to_GeoCroissant_Support/CEDA_CMIP6_to_GeoCroissant.ipynb"
+          file: "CEDA-UK to GeoCroissant/CEDA_UK to GeoCrossiant.ipynb"
         - text: "Google Earth Engine to GeoCroissant"
-          file: "GEE_to_GeoCroissant/GEE_to_GeoCroissant.ipynb"
+          file: "GEE to GeoCroissant/GEE to GeoCroissant.ipynb"
+        - text: "Kaggle to GeoCroissant"
+          file: "Kaggle GeoCroissant/Kaggle-GeoCroissant.ipynb"
     - part: "**Data Format to GeoCroissant**"
       chapters:
         - text: "GeoParquet to GeoCroissant"
-          file: "GeoParquet_to_GeoCroissant_Support/GeoParquet_to_GeoCroissant.ipynb"
-        - text: "HDF5 to GeoCroissant"
-          file: "HDF5_Support_GeoCroissant/HDF5_to_GeoCroissant.ipynb"
-        - text: "NetCDF to GeoCroissant"
-          file: "SDO_to_GeoCroissant_NetCDF/SDO-Geocroissant_NetCDF.ipynb"
-        - text: "Zarr Datacube to GeoCroissant"
-          file: "Zarr_Datacube_to_GeoCroissant/Zarr_Datacube_to_GeoCroissant.ipynb"
+          file: "GeoCroissant GeoParquet Support/GeoParquet to GeoCroissant.ipynb"
+        - text: "Landslide4Sense HDF5 to GeoCroissant"
+          file: "Landslide4Sense-HDF5 GeoCroissant/Landslide4Sense-HDF5 GeoCroissant.ipynb"
+        - text: "Space Weather & Heliophysics (SDO)"
+          file: "Solar Dynamics Observatory GeoCroissant/SDO GeoCroissant.ipynb"
     - part: "**GeoCroissant Extensions**"
       chapters:
         - text: "Time-Series Support"
-          file: "GeoCroissant_Time_Series_Support/geocr_time-series.ipynb"
+          file: "GeoCroissant Time-Series Support/GeoCroissant Time-Series Support.ipynb"
         - text: "OGC-TDML to GeoCroissant"
-          file: "OGC_TDML_to_GeoCroissant_Support/ogc_tdml_to_geocr/ogc_tdml_to_geocr_conversion.ipynb"
+          file: "OGC-TDML GeoCroissant Support/OGC-TDML to GeoCroissant/OGC-TDML to GeoCroissant.ipynb"
         - text: "GeoCroissant to OGC-TDML"
-          file: "OGC_TDML_to_GeoCroissant_Support/geocr_to_ogc_tdml/geocr_to_ogc_tdml_conversion.ipynb"
+          file: "OGC-TDML GeoCroissant Support/GeoCroissant to OGC-TDML/GeoCroissant to OGC-TDML.ipynb"
     - part: "**GeoCroissant RAI**"
       chapters:
-        - text: "HLS Responsible AI"
-          file: "GeoCroissant_RAI/geocr_hls_rai.ipynb"
-        - text: "Wx-Bench Responsible AI"
-          file: "GeoCroissant_RAI/geocr_wxc_rai.ipynb"
+        - text: "Responsible AI (RAI) Specifications"
+          file: "GeoCroissant & Responsible AI (RAI) Specs/GeoCroissant (RAI) Specifications.ipynb"
     - part: "**GeoCroissant to Standards**"
       chapters:
         - text: "GeoCroissant to STAC"
-          file: "GeoCroissant_to_STAC/conversion-notebook.ipynb"
+          file: "GeoCroissant to STAC/conversion-stac-notebook.ipynb"
         - text: "GeoCroissant to GeoDCAT"
-          file: "GeoCroissant_to_GeoDCAT/conversion-geodcat-notebook.ipynb"
+          file: "GeoCroissant to GeoDCAT/conversion-geodcat-notebook.ipynb"
     - references.qmd
     
 execute:

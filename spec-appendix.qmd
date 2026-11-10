@@ -19,7 +19,7 @@ pip install -e .[geo]
 
 ---
 
-## Appendix B: GeoSPARQL Query Examples {#appendix-c-geosparql-query-examples}
+## Appendix B: GeoSPARQL Query Examples {#appendix-b-geosparql-query-examples}
 
 The following SPARQL queries illustrate how GeoCroissant metadata exposed as RDF can be queried using GeoSPARQL predicates.
 

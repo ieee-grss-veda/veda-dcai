@@ -1,0 +1,163 @@
+---
+title: "Metadata Catalog & JSON Artifacts"
+format: html
+---
+
+GeoCroissant recipes generate machine-readable JSON-LD documents describing geospatial machine learning datasets. Every metadata document conforms to schema.org, MLCommons Croissant, and the GeoCroissant vocabulary extension.
+
+This catalog indexes all metadata artifacts across the recipes, provides direct links to inspect the raw files, and explains how to view and query them.
+
+## Viewing Metadata Files
+
+### 1. In the Browser
+When running `quarto preview` or browsing the built site, click any file link in the table below to open the raw JSON or Turtle document directly in your browser. Browsers with built-in JSON viewers or extensions (such as JSON Viewer) will format, fold, and highlight the structure automatically.
+
+### 2. Using Python and mlcroissant
+Load and inspect any GeoCroissant JSON-LD file directly with the `mlcroissant` library:
+
+```python
+import json
+import mlcroissant as mlc
+
+# Load and validate the dataset
+dataset = mlc.Dataset("Introduction to Geocroissant/hls_burn_scars.json")
+
+# Access dataset-level metadata
+metadata = dataset.metadata
+print(f"Dataset Name: {metadata.name}")
+print(f"License: {metadata.license}")
+
+# Access RecordSets and fields
+for record_set in metadata.record_sets:
+    print(f"RecordSet: {record_set.name}")
+    for field in record_set.fields:
+        print(f"  Field: {field.name} ({field.data_type})")
+```
+
+### 3. Command Line Inspection
+Pretty-print or query any metadata file with `jq`:
+
+```bash
+# Pretty-print top-level properties
+jq '{name, "geocr:coordinateReferenceSystem", "geocr:spatialResolution"}' \
+  "Introduction to Geocroissant/hls_burn_scars.json"
+
+# List all record fields
+jq '.recordSet[].field[].name' \
+  "Introduction to Geocroissant/hls_burn_scars.json"
+```
+
+---
+
+## Artifact Index
+
+| Recipe | Dataset & Platform | Metadata Artifact | Format | CRS / Coverage |
+|---|---|---|---|---|
+| **Introduction** | NASA/IBM HLS Burn Scars | [hls_burn_scars.json](Introduction to Geocroissant/hls_burn_scars.json) | GeoCroissant JSON-LD | EPSG:32610, 30m, 6 bands |
+| **STAC to GeoCroissant** | Sentinel-2 L2A (Planetary Computer) | [sentinel2_las_vegas.json](STAC to GeoCroissant/sentinel2_las_vegas.json) | GeoCroissant JSON-LD | EPSG:32611, 10m/20m/60m, 12 bands |
+| **NASA UMM** | HLS Landsat/Sentinel (NASA CMR) | [nasa_hls_geocroissant.json](Unified Metadata Model to GeoCroissant/nasa_hls_geocroissant.json) | GeoCroissant JSON-LD | EPSG:32610, 30m |
+| **CEDA CMIP6** | HadGEM3-GC31-LL tas (CEDA DataPoint) | [cmip6_tas_geocroissant.json](CEDA-UK to GeoCroissant/cmip6_tas_geocroissant.json) | GeoCroissant JSON-LD | EPSG:4326, NetCDF/CF grid |
+| **Google Earth Engine** | Landsat 8/9 SR (GEE) | [gee.json](GEE to GeoCroissant/gee.json) | GeoCroissant JSON-LD | EPSG:32610, GEE Asset |
+| **Kaggle** | Massachusetts Roads Dataset | [massachusetts-roads-dataset-metadata.json](Kaggle GeoCroissant/massachusetts-roads-dataset-metadata.json) | GeoCroissant JSON-LD | Aerial imagery + road masks |
+| **GeoParquet** | NAIP Aerial Imagery (USGS) | [naip_croissant.json](GeoCroissant GeoParquet Support/naip_croissant.json)<br>[naip.parquet](GeoCroissant GeoParquet Support/naip.parquet) | GeoCroissant JSON-LD & GeoParquet | EPSG:3857, 1m GSD |
+| **Landslide4Sense** | Multi-sensor Benchmark (HDF5) | [landslide4sense.json](Landslide4Sense-HDF5 GeoCroissant/landslide4sense.json) | GeoCroissant JSON-LD | Multi-sensor: S2, PALSAR, SRTM |
+| **Space Weather (SDO)** | NASA SDO SuryaBench (AIA) | [sdo_surya_bench.json](Solar Dynamics Observatory GeoCroissant/sdo_surya_bench.json) | GeoCroissant JSON-LD | Heliophysics Multi-Wavelength (171Å, 193Å) |
+| **Time-Series** | Sentinel-2 Multi-temporal Series | [sentinel2_timeseries.json](GeoCroissant Time-Series Support/sentinel2_timeseries.json) | GeoCroissant JSON-LD | 1-month cadence, `timeSeriesIndex` |
+| **OGC-TDML to GeoCroissant** | HLS Burn Scars TDML Conversion | [hls_burn_scars_geocroissant.json](OGC-TDML GeoCroissant Support/OGC-TDML to GeoCroissant/hls_burn_scars_geocroissant.json) | GeoCroissant JSON-LD | Converted from TrainingDML-AI |
+| **GeoCroissant to OGC-TDML** | HLS Burn Scars OGC Export | [hls_burn_scars_tdml.json](OGC-TDML GeoCroissant Support/GeoCroissant to OGC-TDML/hls_burn_scars_tdml.json) | OGC TrainingDML-AI JSON | AI training data markup standard |
+| **Responsible AI (RAI)** | HLS Burn Scars RAI Specification | [hls_burn_scars_rai.json](GeoCroissant%20%26%20Responsible%20AI%20(RAI)%20Specs/hls_burn_scars_rai.json) | GeoCroissant + RAI JSON-LD | Spatial bias, sampling, ODRL/DUO policies |
+| **GeoCroissant to STAC** | Sentinel-2 STAC Item Export | [sentinel2_stac_item.json](GeoCroissant to STAC/sentinel2_stac_item.json) | STAC Item JSON | Conforms to STAC v1.0.0 |
+| **GeoCroissant to GeoDCAT** | Sentinel-2 GeoDCAT-AP Export | [sentinel2_geodcat.jsonld](GeoCroissant to GeoDCAT/sentinel2_geodcat.jsonld)<br>[sentinel2_geodcat.ttl](GeoCroissant to GeoDCAT/sentinel2_geodcat.ttl) | GeoDCAT-AP JSON-LD & RDF Turtle | Validated against SHACL shapes |
+
+---
+
+## Sample Metadata Previews
+
+### Core GeoCroissant Record (`hls_burn_scars.json`)
+
+```json
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "cr": "http://mlcommons.org/croissant/",
+    "geocr": "http://mlcommons.org/croissant/geo/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "dct": "http://purl.org/dc/terms/",
+    "conformsTo": "dct:conformsTo",
+    "recordSet": "cr:recordSet",
+    "field": "cr:field"
+  },
+  "@type": "Dataset",
+  "name": "hls-burn-scars",
+  "description": "Harmonized Landsat-Sentinel-2 (HLS) Burn Scars dataset for wildfire detection.",
+  "conformsTo": [
+    "http://mlcommons.org/croissant/1.1",
+    "http://mlcommons.org/croissant/geo/1.0"
+  ],
+  "spatialCoverage": {
+    "@type": "Place",
+    "geo": {
+      "@type": "GeoShape",
+      "box": "24.396308 -124.848974 49.384358 -66.885444"
+    }
+  },
+  "geocr:coordinateReferenceSystem": "EPSG:32610",
+  "geocr:spatialResolution": {
+    "@type": "sc:QuantitativeValue",
+    "value": 30,
+    "unitText": "m"
+  },
+  "geocr:bandConfiguration": {
+    "@type": "geocr:BandConfiguration",
+    "geocr:totalBands": 6,
+    "geocr:bandNamesList": ["Blue", "Green", "Red", "NIR", "SWIR1", "SWIR2"]
+  }
+}
+```
+
+### Heliophysics Record (`sdo_surya_bench.json`)
+
+```json
+{
+  "@type": "Dataset",
+  "name": "sdo-surya-bench",
+  "conformsTo": [
+    "http://mlcommons.org/croissant/1.1",
+    "http://mlcommons.org/croissant/geo/1.0"
+  ],
+  "geocr:multiWavelengthConfiguration": {
+    "@type": "geocr:MultiWavelengthConfiguration",
+    "geocr:channelList": ["171Å", "193Å"]
+  },
+  "geocr:solarInstrumentCharacteristics": {
+    "@type": "geocr:SolarInstrumentCharacteristics",
+    "geocr:observatory": "SDO",
+    "geocr:instrument": "AIA"
+  }
+}
+```
+
+### Multi-Temporal Time-Series Record (`sentinel2_timeseries.json`)
+
+```json
+{
+  "@type": "Dataset",
+  "name": "sentinel2-timeseries",
+  "geocr:temporalResolution": {
+    "@type": "sc:QuantitativeValue",
+    "value": 1,
+    "unitText": "month"
+  },
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "timeseries_recordset",
+      "geocr:timeSeriesIndex": {
+        "@id": "timeseries_recordset/timestamp"
+      }
+    }
+  ]
+}
+```
+

@@ -3,13 +3,14 @@ title: "References"
 format: html
 ---
 
-## Croissant & GeoCroissant
+## GeoCroissant & Croissant
 
 * [MLCommons Croissant](http://mlcommons.org/croissant/)
 * [GeoCroissant Specification v1.0](http://mlcommons.org/croissant/geo/1.0)
+* [Croissant Vocabulary Portal (VDF)](vdf/index.html)
 * [Croissant GitHub Repository](https://github.com/mlcommons/croissant)
 * [mlcroissant Python Library](https://pypi.org/project/mlcroissant/)
-* [Croissant Editor](https://huggingface.co/spaces/MLCommons/croissant-editor)
+* [GeoCroissant Editor](https://huggingface.co/spaces/harshinde/geocroissant-editor)
 
 ## Metadata Standards
 
